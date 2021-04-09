@@ -53,6 +53,7 @@ class App extends Component {
             {
                 if (res.rowCount !== 0){
                     alert (`${res.rows[0].ownername} تم اضافة البيانات بنجاح`);
+                    document.location.href = '/'
                 }
             }
             );
