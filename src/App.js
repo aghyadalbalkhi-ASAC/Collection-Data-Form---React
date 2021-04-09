@@ -43,7 +43,7 @@ class App extends Component {
     }
 
     handleSubmit(event) {
-        let url = `http://localhost:3031/round`;
+        let url = `https://abd-ali-form.herokuapp.com/round`;
         fetch(url,
         {
             body: JSON.stringify(this.state),
