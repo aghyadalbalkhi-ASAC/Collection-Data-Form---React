@@ -15,7 +15,7 @@ class App extends Component {
             idnum: '',
             dob: '',
             telnum: '',
-            notes: 'عرض خارج المحل',
+            notes: '',
             namesofobservers: '',
             touched: {
                 ownerName: false,
@@ -23,7 +23,8 @@ class App extends Component {
                 telnum: false,
                 dob : false,
                 namesofobservers:false,
-                typeofactivity:false
+                typeofactivity:false,
+                notes:false,
             }
         }
 
@@ -68,7 +69,7 @@ class App extends Component {
         });
     }
 
-    validate(typeofactivity,ownerName, dob, idnum, telnum,namesofobservers) {
+    validate(typeofactivity,ownerName, dob, idnum, telnum,notes,namesofobservers) {
         const errors = {
             ownerName: '',
             lastname: '',
@@ -77,12 +78,18 @@ class App extends Component {
             dob: '',
             namesofobservers: '',
             typeofactivity : '',
+            notes:'',
         };
 
         if (this.state.touched.ownerName && ownerName.length < 3)
             errors.ownerName = 'owner Name should be >= 3 characters';
         else if (this.state.touched.ownerName && ownerName.length > 30)
             errors.ownerName = 'owner Name should be <= 10 characters';
+
+        if (this.state.touched.notes && notes.length < 3)
+            errors.notes = 'owner Name should be >= 3 characters';
+        else if (this.state.touched.notes && notes.length > 30)
+            errors.notes = 'owner Name should be <= 10 characters';
 
         if (this.state.touched.typeofactivity && typeofactivity.length < 3)
             errors.typeofactivity = 'type of activity should be >= 3 characters';
@@ -103,14 +110,14 @@ class App extends Component {
 
         if (this.state.touched.namesofobservers && namesofobservers.length < 3)
             errors.namesofobservers = 'observers Names should be >= 3 characters';
-        else if (this.state.touched.namesofobservers && namesofobservers.length > 30)
+        else if (this.state.touched.namesofobservers && namesofobservers.length > 100)
             errors.namesofobservers = 'observers Names should be <= 10 characters';
 
         return errors;
     }
 
     render() {
-        const errors = this.validate(this.state.typeofactivity,this.state.ownerName,this.state.dob, this.state.idnum, this.state.telnum,this.state.namesofobservers);
+        const errors = this.validate(this.state.typeofactivity,this.state.ownerName,this.state.dob, this.state.idnum, this.state.telnum,this.state.notes,this.state.namesofobservers);
         return(
           <>
             <Jumbotron>
@@ -241,23 +248,30 @@ class App extends Component {
                         <Label htmlFor="notes" md={12}>الملاحظات</Label>
                             <Col md={{size: 6,offset:6}}>{/* , offset: 1 */}
                                 <Input type="textarea" name="notes"
+                                    placeholder="الملاحظات"
                                         required
                                         rows="8"
                                         value={this.state.notes}
+                                        valid={errors.notes === ''}
+                                        invalid={errors.notes !== ''}
+                                        onBlur={this.handleBlur('notes')}
                                         onChange={this.handleInputChange}>
+                                        <FormFeedback>{errors.notes}</FormFeedback>
+
                                     
                                 </Input>
                             </Col>
                         </FormGroup>
 
-              {/* <-------------------------------------   تاريخ الميلاد  --------------------------------------> */}
+              {/* <-------------------------------------   اسماء المراقبين  --------------------------------------> */}
 
                         <FormGroup row>
                             <Label htmlFor="namesofobservers" md={12}>اسماء المراقبين</Label>
-                            <Col md={12}>
-                                <Input type="text" id="lastname" name="namesofobservers"
+                            <Col md={{size: 6,offset:6}}>
+                                <Input type="textarea" id="lastname" name="namesofobservers"
                                     placeholder="اسماء المراقبين"
                                     required
+                                    rows="8"
                                     value={this.state.namesofobservers}
                                     valid={errors.namesofobservers === ''}
                                     invalid={errors.namesofobservers !== ''}
