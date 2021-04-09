@@ -35,17 +35,28 @@ class App extends Component {
 
     handleInputChange(event) {
         const target = event.target;
-        const value = target.type === 'checkbox' ? target.checked : target.value;
+        let value = target.type === 'checkbox' ? target.checked : target.value;
         const name = target.name;
-    
         this.setState({
             [name]: value
         });
     }
 
     handleSubmit(event) {
-        console.log('Current State is: ' + JSON.stringify(this.state));
-        alert('Current State is: ' + JSON.stringify(this.state));
+        let url = `http://localhost:3031/round`;
+        fetch(url,
+        {
+            body: JSON.stringify(this.state),
+            method: "post"
+        }).then(res => res.json())
+        .then(res => 
+            {
+                if (res.rowCount !== 0){
+                    alert (`${res.rows[0].ownername} تم اضافة البيانات بنجاح`);
+                }
+            }
+            );
+
         event.preventDefault();
     }
 
@@ -118,8 +129,9 @@ class App extends Component {
       {/* <-------------------------------------   نوع النشاط     --------------------------------------> */}
                         <FormGroup row>
                         <Label htmlFor="typeofactivity" md={12}>نوع النشاط</Label>
-                            <Col md={{size: 3}}>{/* , offset: 1 */}
+                            <Col md={{size: 3,offset:9}}>{/* , offset: 1 */}
                                 <Input type="select" name="typeofactivity"
+                                        required
                                         value={this.state.typeofactivity}
                                         onChange={this.handleInputChange}>
                                     <option>محل تجاري</option>
@@ -140,6 +152,7 @@ class App extends Component {
                                     <Input type="text" id="ownerName" name="ownerName"
                                         placeholder="ادخل الاسم الرباعي"
                                         value={this.state.ownerName}
+                                        required
                                         valid={errors.ownerName === ''}
                                         invalid={errors.ownerName !== ''}
                                         onBlur={this.handleBlur('ownerName')}
@@ -150,9 +163,10 @@ class App extends Component {
 
       {/* <-------------------------------------   نوع الاثبات   --------------------------------------> */}
                         <FormGroup row>
-                          <Label htmlFor="idtype" md={12}>نوع الاثبات</Label>
-                            <Col md={{size: 3}}>{/* , offset: 1 */}
+                            <Label htmlFor="idtype" md={12}>نوع الاثبات</Label>
+                            <Col md={{size: 3,offset:9}}>{/* , offset: 1 */}
                                 <Input type="select" name="idtype"
+                                    required
                                         value={this.state.idtype}
                                         onChange={this.handleInputChange}>
                                     <option>ترخيص</option>
@@ -166,10 +180,11 @@ class App extends Component {
       {/* <-------------------------------------   رقمه  --------------------------------------> */}
 
                             <FormGroup row>
-                                <Label htmlFor="idnum" md={2}>رقمه</Label>
+                                <Label htmlFor="idnum" md={12}>رقمه</Label>
                                 <Col md={12}>
                                     <Input type="tel" id="idnum" name="idnum"
                                         placeholder="رقم الاثبات"
+                                        required
                                         value={this.state.idnum}
                                         valid={errors.idnum === ''}
                                         invalid={errors.idnum !== ''}
@@ -182,9 +197,10 @@ class App extends Component {
       {/* <-------------------------------------   تاريخ الميلاد  --------------------------------------> */}
 
                             <FormGroup row>
-                                <Label htmlFor="dob" md={2}>ناريخ الميلاد</Label>
+                                <Label htmlFor="dob" md={12}>ناريخ الميلاد</Label>
                                 <Col md={12}>
                                     <Input type="date" id="lastname" name="dob"
+                                        required
                                         placeholder="ادخل تاريخ الميلاد"
                                         value={this.state.dob}
                                         valid={errors.dob === ''}
@@ -199,10 +215,11 @@ class App extends Component {
         {/* <-------------------------------------   الجوال  --------------------------------------> */}
 
                             <FormGroup row>
-                                <Label htmlFor="telnum" md={2}>الجوال</Label>
+                                <Label htmlFor="telnum" md={12}>الجوال</Label>
                                 <Col md={12}>
                                     <Input type="tel" id="telnum" name="telnum"
                                         placeholder="ادخل رقم الجوال"
+                                        required
                                         value={this.state.telnum}
                                         valid={errors.telnum === ''}
                                         invalid={errors.telnum !== ''}
@@ -215,10 +232,12 @@ class App extends Component {
       {/* <-------------------------------------   الملاحظات   --------------------------------------> */}
       <FormGroup row>
                         <Label htmlFor="notes" md={12}>الملاحظات</Label>
-                            <Col md={{size: 5}}>{/* , offset: 1 */}
+                            <Col md={{size: 5,offset:7}}>{/* , offset: 1 */}
                                 <Input type="select" name="notes"
+                                        required
                                         value={this.state.notes}
                                         onChange={this.handleInputChange}>
+                                    <option>لايوجد ملاحظات</option>
                                     <option>عرض خارج المحل</option>
                                     <option>عدم التقيدباشتراطات الصحة العامة</option>
                                     <option>عدم تجديد الترخيص</option>
@@ -244,7 +263,6 @@ class App extends Component {
                                     <option>عدم التقيد بالزي المناسب</option>
                                     <option>عدم تغطية اللحم</option>
                                     <option>عدم وجود شهاده ذبح</option>
-                                    <option>عدم وجود شهاده ذبح</option>
                                     <option>وجود مستودع بدون ترخيص</option>
                                 </Input>
                             </Col>
@@ -253,10 +271,11 @@ class App extends Component {
               {/* <-------------------------------------   تاريخ الميلاد  --------------------------------------> */}
 
                         <FormGroup row>
-                            <Label htmlFor="namesofobservers" md={2}>اسماء المراقبين</Label>
+                            <Label htmlFor="namesofobservers" md={12}>اسماء المراقبين</Label>
                             <Col md={12}>
                                 <Input type="text" id="lastname" name="namesofobservers"
                                     placeholder="اسماء المراقبين"
+                                    required
                                     value={this.state.namesofobservers}
                                     valid={errors.namesofobservers === ''}
                                     invalid={errors.namesofobservers !== ''}
@@ -278,7 +297,7 @@ class App extends Component {
                     </div>
                 </div>
             </div>
-          </>
+        </>
         );
     }
 }
