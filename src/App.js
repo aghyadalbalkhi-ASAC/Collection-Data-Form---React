@@ -9,7 +9,7 @@ class App extends Component {
         super(props);
 
         this.state = {
-            typeofactivity: 'محل تجاري',
+            typeofactivity: '',
             ownerName: '',
             idtype: 'هوية وطنية',
             idnum: '',
@@ -22,7 +22,8 @@ class App extends Component {
                 idnum: false,
                 telnum: false,
                 dob : false,
-                namesofobservers:false
+                namesofobservers:false,
+                typeofactivity:false
             }
         }
 
@@ -67,7 +68,7 @@ class App extends Component {
         });
     }
 
-    validate(ownerName, dob, idnum, telnum,namesofobservers) {
+    validate(typeofactivity,ownerName, dob, idnum, telnum,namesofobservers) {
         const errors = {
             ownerName: '',
             lastname: '',
@@ -75,12 +76,18 @@ class App extends Component {
             telnum: '',
             dob: '',
             namesofobservers: '',
+            typeofactivity : '',
         };
 
         if (this.state.touched.ownerName && ownerName.length < 3)
             errors.ownerName = 'owner Name should be >= 3 characters';
         else if (this.state.touched.ownerName && ownerName.length > 30)
             errors.ownerName = 'owner Name should be <= 10 characters';
+
+        if (this.state.touched.typeofactivity && typeofactivity.length < 3)
+            errors.typeofactivity = 'type of activity should be >= 3 characters';
+        else if (this.state.touched.typeofactivity && typeofactivity.length > 30)
+            errors.typeofactivity = 'type of activity should be <= 10 characters';
 
         if (this.state.touched.dob && dob.length < 3)
             errors.dob = 'Last Name should be >= 3 characters';
@@ -103,7 +110,7 @@ class App extends Component {
     }
 
     render() {
-        const errors = this.validate(this.state.ownerName,this.state.dob, this.state.idnum, this.state.telnum,this.state.namesofobservers);
+        const errors = this.validate(this.state.typeofactivity,this.state.ownerName,this.state.dob, this.state.idnum, this.state.telnum,this.state.namesofobservers);
         return(
           <>
             <Jumbotron>
@@ -128,22 +135,21 @@ class App extends Component {
                         <Form onSubmit={this.handleSubmit}>
 
       {/* <-------------------------------------   نوع النشاط     --------------------------------------> */}
+
                         <FormGroup row>
-                        <Label htmlFor="typeofactivity" md={12}>نوع النشاط</Label>
-                            <Col md={{size: 2,offset:10}}>{/* , offset: 1 */}
-                                <Input type="select" name="typeofactivity"
-                                        required
+                                <Label htmlFor="typeofactivity" md={12}>نوع النشاط</Label>
+                                <Col md={12}>
+                                    <Input type="text" id="typeofactivity" name="typeofactivity"
+                                        placeholder="ادخل نوع النشاط"
                                         value={this.state.typeofactivity}
-                                        onChange={this.handleInputChange}>
-                                    <option>محل تجاري</option>
-                                    <option>محل تجاري متعلق بالصحة العامة</option>
-                                    <option>مركز تجاري ليس له علاقة بالصحة العامه</option>
-                                    <option>بائع متجول</option>
-                                    <option>عربة اطعمه</option>
-                                    <option>بسطه عشوائيه</option>
-                                </Input>
-                            </Col>
-                        </FormGroup>
+                                        required
+                                        valid={errors.typeofactivity === ''}
+                                        invalid={errors.typeofactivity !== ''}
+                                        onBlur={this.handleBlur('typeofactivity')}
+                                        onChange={this.handleInputChange} />
+                                    <FormFeedback>{errors.typeofactivity}</FormFeedback>
+                                </Col>
+                            </FormGroup>
 
       {/* <-------------------------------------   اسم صاحب النشاط  --------------------------------------> */}
 
@@ -233,38 +239,13 @@ class App extends Component {
       {/* <-------------------------------------   الملاحظات   --------------------------------------> */}
       <FormGroup row>
                         <Label htmlFor="notes" md={12}>الملاحظات</Label>
-                            <Col md={{size: 2,offset:10}}>{/* , offset: 1 */}
-                                <Input type="select" name="notes"
+                            <Col md={{size: 6,offset:6}}>{/* , offset: 1 */}
+                                <Input type="textarea" name="notes"
                                         required
+                                        rows="8"
                                         value={this.state.notes}
                                         onChange={this.handleInputChange}>
-                                    <option>لايوجد ملاحظات</option>
-                                    <option>عرض خارج المحل</option>
-                                    <option>عدم التقيدباشتراطات الصحة العامة</option>
-                                    <option>عدم تجديد الترخيص</option>
-                                    <option>عدم وجود ترخيص</option>
-                                    <option>عدم الاهتمام بنظافة الاواني</option>
-                                    <option>تدني مستوى النظافة للمحل</option>
-                                    <option>عدم الاهتمام بتقليم الاظافر</option>
-                                    <option>عدم الاهمتام بقص الشعر</option>
-                                    <option>عدم وجود شهادات صحية</option>
-                                    <option>تعطيل المراقبين /هروب العاملين</option>
-                                    <option>وجود مواد منتهية</option>
-                                    <option>شهادات صحية منتهية</option>
-                                    <option>فتح المحل دون الحصول على ترخيص</option>
-                                    <option>بائع متجول</option>
-                                    <option>بسطه عشوائيه</option>
-                                    <option>عدم وجود ستاره هوائيه</option>
-                                    <option>عدم وجود مصيدة حشرات</option>
-                                    <option>عدم لبس الكمامات</option>
-                                    <option>عدم لبس القفازات</option>
-                                    <option>مخالفة اللوحة للترخيص</option>
-                                    <option>فتح المحل بعد الاغلاق دون مراجعة الامانه</option>
-                                    <option>تسريب المياه</option>
-                                    <option>عدم التقيد بالزي المناسب</option>
-                                    <option>عدم تغطية اللحم</option>
-                                    <option>عدم وجود شهاده ذبح</option>
-                                    <option>وجود مستودع بدون ترخيص</option>
+                                    
                                 </Input>
                             </Col>
                         </FormGroup>
