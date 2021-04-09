@@ -108,9 +108,9 @@ class App extends Component {
             <Jumbotron>
                 <div className="container">
                     <div className="row row-header">
-                        <div className="col-12 col-sm-6" >
-                            <h1>Ristorante con Fusion</h1>
-                            <p>We take inspiration from the World's best cuisines, and create a unique fusion experience. Our lipsmacking creations will tickle your culinary senses!</p>
+                        <div className="col-12" >
+                            <h1>نموذج جمع البيانات</h1>
+                            <p>يستخدم هذا النموذج من قبل المراقب لتعبئة المعلومات الخاصة بالجولات</p>
                         </div>
                     </div>
                 </div>
@@ -120,16 +120,16 @@ class App extends Component {
             <div className="container">
                 <div className="row row-content">
                     <div className="col-12">
-                        <h3>Send us your Feedback</h3>
+                        <h3>قم بتعبئة النموذج أدناه</h3>
                     </div>
                     <br></br><br></br><br></br>
-                    <div className="col-12 col-md-9">
+                    <div className="col-12">
                         <Form onSubmit={this.handleSubmit}>
 
       {/* <-------------------------------------   نوع النشاط     --------------------------------------> */}
                         <FormGroup row>
                         <Label htmlFor="typeofactivity" md={12}>نوع النشاط</Label>
-                            <Col md={{size: 3,offset:9}}>{/* , offset: 1 */}
+                            <Col md={{size: 2,offset:10}}>{/* , offset: 1 */}
                                 <Input type="select" name="typeofactivity"
                                         required
                                         value={this.state.typeofactivity}
@@ -164,7 +164,7 @@ class App extends Component {
       {/* <-------------------------------------   نوع الاثبات   --------------------------------------> */}
                         <FormGroup row>
                             <Label htmlFor="idtype" md={12}>نوع الاثبات</Label>
-                            <Col md={{size: 3,offset:9}}>{/* , offset: 1 */}
+                            <Col md={{size: 2,offset:10}}>{/* , offset: 1 */}
                                 <Input type="select" name="idtype"
                                     required
                                         value={this.state.idtype}
@@ -197,7 +197,7 @@ class App extends Component {
       {/* <-------------------------------------   تاريخ الميلاد  --------------------------------------> */}
 
                             <FormGroup row>
-                                <Label htmlFor="dob" md={12}>ناريخ الميلاد</Label>
+                                <Label htmlFor="dob" md={12}>ناريخ الجولة</Label>
                                 <Col md={12}>
                                     <Input type="date" id="lastname" name="dob"
                                         required
@@ -232,7 +232,7 @@ class App extends Component {
       {/* <-------------------------------------   الملاحظات   --------------------------------------> */}
       <FormGroup row>
                         <Label htmlFor="notes" md={12}>الملاحظات</Label>
-                            <Col md={{size: 5,offset:7}}>{/* , offset: 1 */}
+                            <Col md={{size: 2,offset:10}}>{/* , offset: 1 */}
                                 <Input type="select" name="notes"
                                         required
                                         value={this.state.notes}
@@ -287,9 +287,9 @@ class App extends Component {
 
 
                             <FormGroup row>
-                                <Col md={{size: 10, offset: 0}}>
+                                <Col md={{size: 12, offset: 0}}>
                                     <Button type="submit" color="primary">
-                                        Send Feedback
+                                        ارسال
                                     </Button>
                                 </Col>
                             </FormGroup>
